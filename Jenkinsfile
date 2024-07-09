@@ -16,5 +16,16 @@ pipeline {
         }
       }
     }
+  stage('check') {
+            steps {
+                sh 'docker ps'
+                sh 'docker compose ps'
+            }
+        }
+         stage('Start container') {
+            steps {
+                sh 'docker compose up -d'
+                sh 'docker compose ps'
+            }
   }
 }
