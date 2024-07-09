@@ -5,9 +5,9 @@ pipeline {
         stage('check') {
             steps {
                 script {
-                    docker ps | grep 'mongo'
+                   sh 'docker ps | grep "mongo"'
                     if (docker ps | grep 'mongo' != null){
-                       docker compose up -d
+                     sh 'docker compose up -d'
                     } else{
                         echo 'mongo is already running!'
                     }
