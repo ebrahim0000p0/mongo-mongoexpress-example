@@ -1,23 +1,19 @@
 pipeline {
-    agent any
+  agent any
 
-    stages {
-        stage('check') {
-            steps {
-                script {
-                   sh 'docker ps | grep "mongo"'
-                    if (docker ps | grep 'mongo' != null){
-                     sh 'docker compose up -d'
-                    } else{
-                        echo 'mongo is already running!'
-                    }
-                }
-
-            }
-                            
-
-            
+  stages {
+    stage('Check Mongo Status') { 
+      steps {
+        script {
+          sh 'docker ps | grep "mongo" || true'  
+          if [ $? -eq 0 ] ; then
+            echo 'Starting Mongo...'
+            sh 'docker-compose up -d' 
+          else
+            echo 'Mongo is already running!'
+          fi
         }
+      }
     }
-    
+  }
 }
